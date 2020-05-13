@@ -1,0 +1,7 @@
+parameters:
+#    gprs_client.example.class: gprs\ClientBundle\Example
+
+services:
+#    gprs_client.example:
+#        class: %gprs_client.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

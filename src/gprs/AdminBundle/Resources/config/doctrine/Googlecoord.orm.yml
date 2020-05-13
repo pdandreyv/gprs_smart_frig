@@ -1,0 +1,29 @@
+gprs\AdminBundle\Entity\Googlecoord:
+  type:  entity
+  table: google_coord
+  #repositoryClass: gprs\AdminBundle\Entity\GooglecoordRepository
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    sms:
+      type: string
+      length: 100
+    lat:
+      type: float
+      nullable: true
+    lng:
+      type: float
+      nullable: true
+    status:
+      type: integer
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+    count_updates:
+      type: integer
+  lifecycleCallbacks:
+      prePersist: [ setCreatedAtValue,setUpdatedAtValue ]
+      preUpdate: [ setUpdatedAtValue ]

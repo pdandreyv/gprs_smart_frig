@@ -1,0 +1,320 @@
+gprs_client_homepage:
+    pattern:  /
+    defaults: { _controller: gprsClientBundle:Default:index }
+alarms:
+    pattern:  /alarms
+    defaults: { _controller: gprsClientBundle:Default:alarms }
+    
+settings:
+    pattern:  /settings
+    defaults: { _controller: gprsClientBundle:Default:settings }
+
+settings_update:
+    pattern:  /settings/update
+    defaults: { _controller: gprsClientBundle:Default:settingsUpdate }
+    requirements:
+      _method:  POST
+
+settings_time:
+    pattern:  /settings/time
+    defaults: { _controller: gprsClientBundle:Default:settingsTime }
+    requirements:
+      _method:  POST
+      
+filter_icebox:
+    pattern:  /filter
+    defaults: { _controller: gprsClientBundle:Default:filter }
+    requirements:
+      _method:  POST
+
+clear_filter:
+    pattern:  /clear_filter/{alarm}
+    defaults: { _controller: gprsClientBundle:Default:clearFilter }
+
+# ICEBOX
+create_icebox:
+    pattern:  /create
+    defaults: { _controller: gprsClientBundle:Forms:create }
+    requirements:
+      _method:  POST
+
+createfromfile_icebox:
+    pattern:  /createfromfile
+    defaults: { _controller: gprsClientBundle:Forms:createFromFile }
+    requirements:
+      _method:  POST
+      
+update_icebox:
+    pattern:  /{id}/update
+    defaults: { _controller: gprsClientBundle:Forms:update }
+    requirements:
+      _method:  POST
+    
+new_icebox:
+    pattern:  /new
+    defaults: { _controller: gprsClientBundle:Forms:new }
+
+edit_icebox:
+    pattern:  /{id}/edit
+    defaults: { _controller: gprsClientBundle:Forms:edit }
+    
+view_icebox:
+    pattern:  /{id}/view
+    defaults: { _controller: gprsClientBundle:Forms:view }
+    
+delete_icebox:
+    pattern:  /{id}/delete
+    defaults: { _controller: gprsClientBundle:Forms:delete }
+
+deactivate_icebox:
+    pattern:  /{id}/deactivate
+    defaults: { _controller: gprsClientBundle:Forms:deactivate }
+    
+get_qrcode:
+    pattern:  /{id}/get_qrcode
+    defaults: { _controller: gprsClientBundle:Default:getQrcode }
+    
+# OUTLET    
+create_outlet:
+    pattern:  /create_outlet
+    defaults: { _controller: gprsClientBundle:Forms:createOutlet }
+    requirements:
+      _method:  POST
+
+update_outlet:
+    pattern:  /{id}/update_outlet
+    defaults: { _controller: gprsClientBundle:Forms:updateOutlet }
+    requirements:
+      _method:  POST
+    
+new_outlet:
+    pattern:  /new_outlet
+    defaults: { _controller: gprsClientBundle:Forms:newOutlet }
+
+edit_outlet:
+    pattern:  /{id}/edit_outlet
+    defaults: { _controller: gprsClientBundle:Forms:editOutlet }
+    
+view_outlet:
+    pattern:  /{id}/view_outlet
+    defaults: { _controller: gprsClientBundle:Forms:viewOutlet }
+    
+list_outlet:
+    pattern:  /list_outlet
+    defaults: { _controller: gprsClientBundle:Forms:listOutlet }
+    
+delete_outlet:
+    pattern:  /{id}/delete_outlet
+    defaults: { _controller: gprsClientBundle:Forms:deleteOutlet }
+    
+# TRADER 
+create_trader:
+    pattern:  /create_trader
+    defaults: { _controller: gprsClientBundle:Forms:createTrader }
+    requirements:
+      _method:  POST
+
+update_trader:
+    pattern:  /{id}/update_trader
+    defaults: { _controller: gprsClientBundle:Forms:updateTrader }
+    requirements:
+      _method:  POST
+    
+new_trader:
+    pattern:  /new_trader
+    defaults: { _controller: gprsClientBundle:Forms:newTrader }
+
+edit_trader:
+    pattern:  /{id}/edit_trader
+    defaults: { _controller: gprsClientBundle:Forms:editTrader }
+    
+view_trader:
+    pattern:  /view_trader
+    defaults: { _controller: gprsClientBundle:Forms:viewTrader }
+    
+delete_trader:
+    pattern:  /{id}/delete_trader
+    defaults: { _controller: gprsClientBundle:Forms:deleteTrader }
+    
+# USER
+create_user:
+    pattern:  /create_user
+    defaults: { _controller: gprsClientBundle:Forms:createUser }
+    requirements:
+      _method:  POST
+
+update_user:
+    pattern:  /{id}/update_user
+    defaults: { _controller: gprsClientBundle:Forms:updateUser }
+    requirements:
+      _method:  POST
+    
+new_user:
+    pattern:  /new_user
+    defaults: { _controller: gprsClientBundle:Forms:newUser }
+
+edit_user:
+    pattern:  /{id}/edit_user
+    defaults: { _controller: gprsClientBundle:Forms:editUser }
+    
+view_user:
+    pattern:  /view_user
+    defaults: { _controller: gprsClientBundle:Forms:viewUser }
+    
+delete_user:
+    pattern:  /{id}/delete_user
+    defaults: { _controller: gprsClientBundle:Forms:deleteUser }
+    
+# OTHER
+    
+get_table:
+    pattern:  /get_table
+    defaults: { _controller: gprsClientBundle:Default:getTable }
+    requirements:
+      _method:  POST
+      
+get_history:
+    pattern:  /get_history
+    defaults: { _controller: gprsClientBundle:Default:getHistory }
+    requirements:
+      _method:  POST
+      
+get_region:
+    pattern:  /get_region/{country}
+    defaults: { _controller: gprsClientBundle:Default:getRegion }
+get_city:
+    pattern:  /get_city/{region}
+    defaults: { _controller: gprsClientBundle:Default:getCity }
+      
+get_report:
+    pattern:  /get_report
+    defaults: { _controller: gprsClientBundle:Default:getReport }
+    requirements:
+      _method:  POST
+      
+report_export:
+    pattern:  /exporter/{format}
+    defaults: { _controller: gprsClientBundle:Default:exporter }
+    
+service_history:
+    pattern:  /service_history/{icebox_id}
+    defaults: { _controller: gprsClientBundle:Default:serviceHistory }
+
+get_graphic_temperature:
+    pattern:  /get_graphic_temperature/{icebox_id}
+    defaults: { _controller: gprsClientBundle:Default:getGraphicTemperature }
+   
+      
+get_graphic_dooropen:
+    pattern:  /get_graphic_dooropen/{icebox_id}
+    defaults: { _controller: gprsClientBundle:Default:getGraphicDooropen }
+
+calib:
+    pattern:  /calib/{id}
+    defaults: { _controller: gprsClientBundle:Forms:calib }
+    requirements:
+      _method:  POST
+    
+calib_cancel:
+    pattern:  /calib_cancel/{id}
+    defaults: { _controller: gprsClientBundle:Forms:calibCancel }
+    
+calib_post:
+    pattern:  /calib_post/{id}
+    defaults: { _controller: gprsClientBundle:Forms:calibPost }
+    
+remember_maxmin:
+    pattern:  /remember_maxmin
+    defaults: { _controller: gprsClientBundle:Forms:rememberMaxmin }
+    requirements:
+      _method:  POST
+    
+api_location:
+    pattern:  /api/location
+    defaults: { _controller: gprsClientBundle:Api:location }
+    requirements:
+      _method:  POST
+      
+api_syn:
+    pattern:  /api/syn
+    defaults: { _controller: gprsClientBundle:Api:synchronization }
+    requirements:
+      _method:  POST
+      
+api_data:
+    pattern:  /api/data
+    defaults: { _controller: gprsClientBundle:Api:data }
+    requirements:
+      _method:  POST
+      
+api_data2:
+    pattern:  /api/data2
+    defaults: { _controller: gprsClientBundle:Api:data2 }
+    requirements:
+      _method:  POST
+
+api_data3:
+    pattern:  /api/data3
+    defaults: { _controller: gprsClientBundle:Api:data3 }
+    requirements:
+      _method:  POST
+      
+api_testdata:
+    pattern:  /api/testdata
+    defaults: { _controller: gprsClientBundle:Api:testData }
+    requirements:
+      _method:  POST
+      
+api_login:
+    pattern:  /api/login
+    defaults: { _controller: gprsClientBundle:Api:login }
+    requirements:
+      _method:  POST
+      
+api_qrcode:
+    pattern:  /api/qrcode
+    defaults: { _controller: gprsClientBundle:Api:qrcode }
+    requirements:
+      _method:  POST
+      
+api_edit_icebox:
+    pattern:  /api/edit_icebox
+    defaults: { _controller: gprsClientBundle:Api:editIcebox }
+    requirements:
+      _method:  POST
+      
+api_service:
+    pattern:  /api/service
+    defaults: { _controller: gprsClientBundle:Api:service }
+    requirements:
+      _method:  POST
+      
+api_complete:
+    pattern:  /api/complete
+    defaults: { _controller: gprsClientBundle:Api:complete }
+    requirements:
+      _method:  POST
+      
+api_remove:
+    pattern:  /api/remove
+    defaults: { _controller: gprsClientBundle:Api:remove }
+    requirements:
+      _method:  POST
+      
+api_services_names:
+    pattern:  /api/services_names
+    defaults: { _controller: gprsClientBundle:Api:getNamesOfServices }
+    requirements:
+      _method:  POST
+      
+api_history_services:
+    pattern:  /api/history_services
+    defaults: { _controller: gprsClientBundle:Api:historyServices }
+    requirements:
+      _method:  POST
+      
+api_addresses:
+    pattern:  /api/addresses
+    defaults: { _controller: gprsClientBundle:Api:outlets }
+    requirements:
+      _method:  POST

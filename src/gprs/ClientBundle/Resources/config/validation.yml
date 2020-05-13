@@ -1,0 +1,4 @@
+gprs\AdminBundle\Icebox:
+    properties:
+        date_producted:
+            - Valid: { groups: [filter] }

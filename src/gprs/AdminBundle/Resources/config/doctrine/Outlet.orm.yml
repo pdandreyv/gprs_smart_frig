@@ -1,0 +1,61 @@
+gprs\AdminBundle\Entity\Outlet:
+  type:  entity
+  table: outlet
+  #repositoryClass: gprs\AdminBundle\Entity\OutletRepository
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    title:
+      type: string
+      length: 100
+      nullable: true
+    description:
+      type: string
+      length: 300
+      nullable: true
+    type:
+      type: string
+      length: 50
+      nullable: true
+    country:
+      type: string
+      length: 100
+      nullable: true
+    region:
+      type: string
+      length: 100
+      nullable: true
+    city:
+      type: string
+      length: 100
+      nullable: true
+    address:
+      type: string
+      length: 100
+      nullable: true
+    status:
+      type: integer
+      nullable: true
+    lat:
+      type: float
+      nullable: true
+    lng:
+      type: float
+      nullable: true
+    manager:
+      type: string
+      length: 100
+      nullable: true
+    phone:
+      type: string
+      length: 16
+      nullable: true
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+  lifecycleCallbacks:
+      prePersist: [ setCreatedAtValue, setUpdatedAtValue ]
+      preUpdate: [ setUpdatedAtValue ]

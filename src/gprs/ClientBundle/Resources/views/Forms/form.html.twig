@@ -1,0 +1,72 @@
+{% form_theme form 'gprsClientBundle:Form:form_table_layout.html.twig' %}
+
+{% extends "gprsClientBundle::layout.html.twig" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}" />
+    <script type="text/javascript" src="{{ asset('js/google-map.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            initialize(true);
+        });
+{% if form.vars.value.id is not null %}
+     /**
+     * AJAX для калибровки веса холодильника
+     */
+    function calib(method) {
+        if(method == '1') url = '{{path('calib', {'id': form.vars.value.id})}}';
+        else url = '{{path('calib', {'id': form.vars.value.id})}}';
+
+        $.post(url,function( data ) {
+            if(data=='exit'){
+                $('#report').hide();
+                $('#treport').html('').hide();
+            }
+            else {
+                $('#report').show();
+                $('#treport').html(data).show(); 
+            }
+            //alert(data);
+        });
+    }
+    
+{% endif %}
+    </script>
+{% endblock %}
+  
+{% block table %}{% endblock %}
+
+{% block form %}
+
+    {% if form.vars.value.id is not null %}
+        <h1>{{'Edit Icebox'|trans}}</h1>
+    {% else %}
+        <h1>{{'Add new Icebox'|trans}}</h1>
+    {% endif %}
+        
+    <form name="single" action="{{ form.vars.value.id  ? path('update_icebox', { 'id': form.vars.value.id }) : path('create_icebox') }}" method="post" {{ form_enctype(form) }} >
+        {{ form_widget(form) }}
+            <br>
+        <input type="submit" value="{{'Save'|trans}}" /><br><br>
+    </form>
+    
+    {% if form.vars.value.id is null %}
+        <h2>{{'Import data from file *.csv'|trans}}</h2>
+    <form name="import" action="{{ path('createfromfile_icebox') }}" method="post" enctype="multipart/form-data" >
+        <input type="file" name="file">
+
+        <input type="submit" value="{{'Import'|trans}}" />
+    </form>
+    {% else %}
+        <button onclick="calib('1')">{{'Сalibrate'|trans}}</button><br><br>
+        <!--<button onclick="calib('2')">{{'Fool calibrate'|trans}}</button><br><br>-->
+        <!--<button {%if(form.vars.value.status==1)%}disabled{%endif%} onclick="location.href='{{path('deactivate_icebox', {'id': form.vars.value.id})}}'">{{'Deactivate'|trans}}</button><br><br>-->
+        <!--<button onclick="if(confirm('{{'Are you sure you want to delete this icebox'|trans}}')){location.href='{{path('delete_icebox', {'id': form.vars.value.id})}}';}else{return false;}">{{'Delete'|trans}}</button>-->
+    {% endif %}
+    
+    {% if center.lat is not null %}
+    <input id="outlet_lat" type="hidden" value="{{center.lat}}" />
+    <input id="outlet_lng" type="hidden" value="{{center.lng}}" />
+    {% endif %}
+
+{% endblock %}

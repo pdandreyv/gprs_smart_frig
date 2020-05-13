@@ -1,0 +1,26 @@
+imports:
+    - { resource: config_prod.yml }
+
+parameters:
+    database_name: pepsi
+    locale: en
+
+    # Москва
+    map_center_lat: 55.7528
+    map_center_lng: 37.6243
+    
+    # Харьков
+    #map_center_lat: 50.007
+    #map_center_lng: 36.251
+    
+    # Стандартное количество секунд между сеансами связи с холодильником
+    time_data: 3600
+
+    site: pepsi
+    main_fields: tr_fio,;model,;type,;contragent,;city,;address,;title,;power,single;sms,period;oos,period;u_oos,period
+    view_icebox_fields: iccid,imei,title,type,model,city,address,contragent,status,t_inside,t_out,dooropen
+    data_fields: created_at,p1,p2,p3,p4,dooropen,location,t_out,t_inside,weight
+    
+    calibrate: 65463|64778|63349|62173|0|0;64663|63959|62331|61334|0|0
+    
+    email_from_alarm: pepsi@uaic.net

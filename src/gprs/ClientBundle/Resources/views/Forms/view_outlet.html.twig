@@ -1,0 +1,28 @@
+{% extends "gprsClientBundle::layout.html.twig" %}
+
+{% block head %}
+    {{parent()}}
+    <style>
+        #map {
+            bottom: 0px;
+        }
+    </style>
+{% endblock %}
+
+{% block form %}
+    
+    <h1>{{'Outlet'|trans}}: {{outlet.title}}</h1>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}<button onclick="location.href='{{path('edit_outlet', {'id': outlet.id})}}'">{{'Edit Outlet'|trans}}</button><br><br>{% endif %}
+    <table>
+    {% for field in fields %}
+        <tr><td>{{field|trans}}:</td><td>{{outlet[field]}}</td></tr>
+    {%endfor%}
+    </table>
+    <input id="center_lat" type="hidden" value="{{outlet.lat}}" />
+    <input id="center_lng" type="hidden" value="{{outlet.lng}}" />
+
+{% endblock %}
+
+{% block table %}
+
+{% endblock %}

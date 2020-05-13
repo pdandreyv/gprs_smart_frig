@@ -1,0 +1,45 @@
+gprs\AdminBundle\Entity\Trader:
+  type:  entity
+  table: trader
+  repositoryClass: gprs\AdminBundle\Entity\TraderRepository
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    fio:
+      type: string
+      length: 100
+      nullable: true
+    phone:
+      type: string
+      length: 16
+      nullable: true
+    email:
+      type: string
+      length: 50
+      nullable: true
+    position:
+      type: string
+      length: 50
+      nullable: true
+    description:
+      type: string
+      length: 1000
+      nullable: true
+    address:
+      type: string
+      length: 500
+      nullable: true
+    alarm_weight:
+      type: boolean
+    alarm_location:
+      type: boolean
+    alarm_temperature:
+      type: boolean
+    alarm_power:
+      type: boolean
+    created_at:
+      type: datetime
+  lifecycleCallbacks:
+      prePersist: [ setCreatedAtValue ]

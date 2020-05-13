@@ -1,0 +1,68 @@
+{% extends "gprsClientBundle::layout.html.twig" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}" />
+    <style>
+        #table {
+            top: 60px;
+        }
+    </style>
+{% endblock %}
+  
+{% block map %}
+    <h1>{{'Traders'|trans}}</h1>
+    <div id="table">
+        <table id="sortTable" class="tablesorter">
+            <!--<thead id='thead'>-->
+            <tr>
+                {% if data %}
+                    <th class="id {sorter: false}">№</th>
+                    <th class="view_edit notsort">&nbsp;</th>
+                    {% for field in fields %}
+                        <th class="{{field}}">{{field|trans}}</th>
+                    {% endfor %}
+                   
+                {% else %}
+                    <th class="{sorter: false}">{{'No data'|trans}}</th>
+                {% endif %}
+            </tr>
+            <!--</thead>-->
+
+            <!--<tbody id='tbody'>-->
+            {% set i = 1 %}
+            {% for row in data %}
+            <tr id="tr{{row.id}}">
+                <td class="check">{{ i }}</td>
+                <td class="edit"><a href="{{path('edit_trader', {'id': row.id})}}">{{'Edit'|trans}}</a></td>
+                {% for field in fields %}
+                    <td>
+                    {%if field=='alarm_weight' %}
+                        {%if row.alarm_weight%}{{'Yes'|trans}}
+                        {%else%}{{'No'|trans}}{%endif%}
+                    {%elseif field=='alarm_location' %} 
+                        {%if row.alarm_location%}{{'Yes'|trans}}
+                        {%else%}{{'No'|trans}}{%endif%}
+                    {%elseif field=='alarm_power' %} 
+                        {%if row.alarm_power%}{{'Yes'|trans}}
+                        {%else%}{{'No'|trans}}{%endif%}
+                    {%elseif field=='alarm_temperature' %} 
+                        {%if row.alarm_temperature%}{{'Yes'|trans}}
+                        {%else%}{{'No'|trans}}{%endif%}
+                    {%else%}{{row[field]}}{%endif%}
+                    </td>
+                {% endfor %}
+            </tr>
+            {% set i = i + 1 %}
+            {% else %}
+            
+            {% endfor %}
+            <!--</tbody>-->
+        </table>
+    </div>
+{% endblock %}
+
+{% block form %}
+
+    <button onclick="location.href='{{path('new_trader')}}'">{{'Add new Trader'|trans}}</button>
+    
+{% endblock %}

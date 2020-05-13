@@ -1,0 +1,189 @@
+Logout: Logout
+Login: Login
+Step: Step
+Next: Next
+Cancel: Cancel
+login: Login
+next: next
+more: More
+Yes: Yes
+No: No
+
+Registration: Registration
+id: ID
+order: ID
+serial_number: Serial Number
+code_tt: Code
+model: Model
+producer: Producer
+date_producted: Date Producted
+image: Image
+country: Country
+region: Region
+city: City
+contragent: Brand
+status: Status
+lat: Latitude
+lng: Longitude
+p1: Shelf 1
+p2: Shelf 2
+p3: Shelf 3
+p4: Shelf 4
+p5: Shelf 5
+p6: Shelf 6
+p1c: Shelf 1
+p2c: Shelf 2
+p3c: Shelf 3
+p4c: Shelf 4
+p5c: Shelf 5
+p6c: Shelf 6
+oos: Count OOS
+sms: Count SMS
+u_oos: Eliminated OOS
+weight_status: OOS
+Eliminated: Eliminated
+Not eliminated: Not eliminated
+OOS: OOS
+created_at: Created At
+updated_at: Updated At
+phone: Phone
+email: Email
+contact: Contact
+address: Address
+type: Type
+description: Description
+fio: Full Name
+position: Company
+title: Place
+brend: Brend
+t_out: Temperature outside
+t_inside: Temperature inside
+dooropen: Door openings
+Dooropen: Door openings
+count: Count
+manager: Responsible
+power: Connection
+weight: Weight
+Weight: Weight
+Weight of the entire refrigerator: Weight of the entire refrigerator
+location: Location
+not power: not connected
+do power: connected
+on place: on place
+full: Full
+outlet: Place
+trader: Responsible
+user: User
+tr_fio: Responsible
+tr_phone: Phone
+tr_email: Email
+monitor: Screen
+Data: Data
+iccid: Id sim
+alarm_power: Power notice
+alarm_weight: Weight notice
+alarm_location: Location notice
+alarm_temperature: Temperature notice
+Outlets: Places
+Traders: Responsibles
+Users: Users
+Edit Trader: Edit responsible
+Edit User: Edit user
+
+Settings: Settings
+Reports: Report
+Home: Main
+User: User
+Save: Save
+Standart: Standart
+Alarms: Alarms
+Add new Icebox: Add new device
+Edit Icebox: Edit device
+Filters: Filters
+Search: Search
+Close: Close
+Clear Filter: Clear
+View: View
+Edit: Edit
+Delete: Delete
+All: All
+Map: Map
+For add coordinates, please, click on map.: For add coordinates, please, click on map.
+Edit profile: Edit profile
+Change password: Change password
+Change: Change
+Period send sms in minutes: Period send sms in minutes
+Send report if location was changed: Send report if location was changed
+Report to phone: Report to phone
+Coordinates was changed: Coordinates was changed
+Weith is light: Weith is light
+Not active: Not connected
+Active: Connected
+Temperature is high: Temperature is high
+Import data from file *.csv: Import data from file *.csv
+Import: Import
+Icebox: Device
+View all data for: View all data for
+Location: Location
+Temperature: Temperature
+Interval: Interval
+From: From
+To: To
+No data: No data
+Are you sure you want to delete this icebox: Are you sure you want to delete this fridge?
+Generating reports: Reports
+Generate a report: Generate a report
+Select the field by which you want to generate a report: Choose report fields
+Graphically display: Graphically display
+You do not have selected any icebox: You do not have selected any fridge
+Export: Export
+For the current period: Current
+In the last week: Over the past week
+During this period: Specified period
+New: New
+Yes: Yes
+No: No
+Deactivate: Deactivate
+Add new Outlet: Add new place
+Add new Trader: Add new responsible
+Add new User: Add new user
+Edit Outlet: Edit place
+Сalibrate: Сalibrate
+Error: Error
+Not correct id of Icebox: Not correct id of fridge
+Not correct slug: Not correct slug
+Enabled calibration weight: Enabled calibration weight fridge. To continue turn off and turn on the fridge
+This icebox is impossible to calibrate: This fridge is impossible to calibrate. Contact your technical support
+Сancel: Сancel
+Calibration running refrigerator. Please wait: Calibration running refrigerator. Please wait
+Сalibrate threshold: Сalibrate threshold
+Fool calibrate: Fool calibrate
+empty_weight_icebox: Communication with fridge installed. Remove from the fridge all the goods for fixing a reference point an empty fridge. Once the fridge is empty, then click Next
+critical_weight_icebox: Fill in the fridge until a critical mass (example 50% or 80%), i.e. to the threshold at which the alarm should be triggered and sent SMS about the critical weight of the fridge. After fill up fridge mass kreticheskoy click Next
+full_weight_icebox: Fill in the fridge until full to lock full weight of the fridge. After filling, click Next
+Go check connection with fridge. Wait a few minutes: Go check connection with fridge. Wait a few minutes
+Minimum weight of the refrigerator is installed: Minimum weight of the refrigerator is installed. 
+Critical mass of the refrigerator is installed: Critical mass of the refrigerator is installed. 
+Weight full refrigerator saved: Weight complete holodilnika saved
+Finish: Finish
+Repeat: Repeat
+During this calibration fails: During this calibration fails, from the fridge did not receive data. Check the connection to the network and the refrigerator, click Retry. In case of repetition of this error - please contact technical support.
+Send alarm for power: Send alarm for power
+Send alarm for weight: Send alarm for weight
+Send alarm for location: Send alarm for location
+Send alarm for temperature: Send alarm for temperature
+sms_weight: In RF at %address% reached the critical level of product weight for model %model%
+sms_location: RF at %address% changed the place of their deployment
+sms_temperature: In RF temperature reached kreticheskogo level %temp%
+The default value in seconds: The default value in seconds - how often have refrigerators send its status to the server
+Time report: Time report (s)
+Download QR-code: Download QR-code
+Service history: Service history
+Remember maximum: Remember maximum
+Remember minimum: Remember minimum
+Shelf: Shelf
+Calibrate weight: Calibrate weight
+Maximum: Maximum
+Minimum: Minimum 
+was saved: was saved
+at shelf: at shelf №

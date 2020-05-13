@@ -1,0 +1,47 @@
+gprs\AdminBundle\Entity\Service:
+  type:  entity
+  table: service
+  repositoryClass: gprs\AdminBundle\Entity\ServiceRepository
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    user_id:
+      type: integer
+      nullable: true
+    icebox_id:
+      type: integer
+      nullable: true
+    description:
+      type: string
+      length: 300
+      nullable: true
+    type:
+      type: string
+      length: 50
+      nullable: true
+    # 1 - начал обслуживание, 2 - завершил обслуживание
+    status:
+      type: integer
+      nullable: true
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+    
+  lifecycleCallbacks:
+      prePersist: [ setCreatedAtValue, setUpdatedAtValue ]
+      preUpdate: [ setUpdatedAtValue ]
+      
+  manyToOne:
+      user:
+        targetEntity: User
+        joinColumn:
+          name: user_id
+          referencedColumnName: id
+      icebox:
+        targetEntity: Icebox
+        joinColumn:
+          name: icebox_id
+          referencedColumnName: id

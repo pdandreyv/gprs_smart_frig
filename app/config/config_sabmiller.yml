@@ -1,0 +1,21 @@
+imports:
+    - { resource: config_prod.yml }
+
+parameters:
+    database_name: sabmiller
+    locale: en
+
+    map_center_lat: 47.18819590905894
+    map_center_lng: 8.48118782043457
+    
+    # Стандартное количество секунд между сеансами связи с холодильником
+    time_data: 3600
+    
+    site: sabmiller
+    main_fields: tr_fio,;tr_email,;model,;type,;contragent,;city,;address,;title,;power,single;t_inside,single;t_out,single;weight,single;location,single;monitor,;sms,period;oos,period;u_oos,period
+    view_icebox_fields: iccid,imei,title,type,model,city,address,contragent,status,t_inside,t_out
+    data_fields: created_at,p1,p2,p3,p4,location,t_out,t_inside,weight
+    
+    calibrate: 65340|64742|63287|61992|0|0;64132|63126|60144|60313|0|0
+    
+    email_from_alarm: submiller@uaic.net

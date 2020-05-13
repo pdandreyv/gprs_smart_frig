@@ -1,0 +1,30 @@
+{% form_theme form 'gprsClientBundle:Form:form_table_layout.html.twig' %}
+{% extends "gprsClientBundle::layout.html.twig" %}
+
+{% block left_block %}
+    <h1>{{'Edit profile'|trans}}</h1>
+    <br>
+    {#<button>{{'Change password'|trans}}</button><br><br>#}
+    
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+    <center>
+        <a href="{{path('new_icebox')}}"><button>{{'Add new Icebox'|trans}}</button></a>
+    </center>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+    <h1>{{'Settings'|trans}}</h1>
+    
+    <form action="{{path('settings_update')}}" method="post" name="sett">
+        {{ form_widget(form) }}
+            <br>
+        <input type="submit" value="{{'Save'|trans}}" />
+    </form><br>
+    
+    <form action="{{path('settings_time')}}" method="post" name="time_rep">
+        {{'The default value in seconds'|trans}}<br>
+        <input type="text" name="time_report" value="{{time_report}}" /> &nbsp; ({{time}})&nbsp; &nbsp;
+        <input type="submit" value="{{'Change'|trans}}" />
+    </form><br>
+{% endblock %}

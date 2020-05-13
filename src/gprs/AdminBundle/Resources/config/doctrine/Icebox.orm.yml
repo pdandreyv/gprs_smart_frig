@@ -1,0 +1,154 @@
+gprs\AdminBundle\Entity\Icebox:
+  type:  entity
+  table: icebox
+  repositoryClass: gprs\AdminBundle\Entity\IceboxRepository
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    outlet_id:
+      type: integer
+      nullable: true
+    trader_id:
+      type: integer
+      nullable: true
+    ordering:
+      type: integer
+      nullable: true
+    serial_number:
+      type: string
+      length: 100
+      nullable: true
+    # не помню зачем добавлял это поле, пока будет 1 - если есть полочки, 0 если нет
+    code_tt:
+      type: string
+      length: 100
+      nullable: true
+    model:
+      type: string
+      length: 100
+      nullable: true
+    title:
+      type: string
+      length: 100
+      nullable: true
+    description:
+      type: string
+      length: 300
+      nullable: true
+    type:
+      type: string
+      length: 50
+      nullable: true
+    producer:
+      type: string
+      length: 100
+      nullable: true
+    date_producted:
+      type: date
+      nullable: true
+    image:
+      type: string
+      length: 100
+      nullable: true
+    country:
+      type: string
+      length: 100
+      nullable: true
+    region:
+      type: string
+      length: 100
+      nullable: true
+    city:
+      type: string
+      length: 100
+      nullable: true
+    address:
+      type: string
+      length: 100
+      nullable: true
+    contragent:
+      type: string
+      length: 100
+      nullable: true
+    # 1 - не активный, 2 - активный и все в порядке, 3 - alarm: изменены координаты, 4 - вес легкий, 5 - температура ниже нормы, 6 - сервисник отправил на удаление
+    status:
+      type: integer
+      nullable: true
+    lat:
+      type: float
+      nullable: true
+    lng:
+      type: float
+      nullable: true
+    phone:
+      type: string
+      length: 16
+      nullable: true
+    manager:
+      type: string
+      length: 100
+      nullable: true
+    monitor:
+      type: string
+      length: 100
+      nullable: true
+    iccid:
+      type: string
+      length: 50
+      nullable: true
+    imei:
+      type: string
+      length: 50
+      nullable: true
+    calib_temp:
+      type: string
+      length: 5000
+      nullable: true
+    calib_weight:
+      type: string
+      length: 5000
+      nullable: true
+    calib_shelf:
+      type: string
+      length: 200
+      nullable: true
+    calib_count:
+      type: string
+      length: 200
+      nullable: true
+    passwod:
+      type: string
+      length: 50
+      nullable: true
+    command:
+      type: string
+      length: 300
+      nullable: true
+    time_report:
+      type: integer
+      nullable: true
+    dooropen:
+      type: integer
+      nullable: true
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+    
+  lifecycleCallbacks:
+      prePersist: [ setCreatedAtValue, setUpdatedAtValue ]
+      preUpdate: [ setUpdatedAtValue ]
+      
+  manyToOne:
+      trader:
+        targetEntity: Trader
+        joinColumn:
+          name: trader_id
+          referencedColumnName: id
+      outlet:
+        targetEntity: Outlet
+        joinColumn:
+          name: outlet_id
+          referencedColumnName: id

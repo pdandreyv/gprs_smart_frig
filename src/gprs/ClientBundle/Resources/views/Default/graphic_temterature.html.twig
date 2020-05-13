@@ -1,0 +1,101 @@
+{% extends "gprsClientBundle::layout.html.twig" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}" />
+    <script src="{{ asset('js/highcharts.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/exporting.js') }}" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <link href="{{ asset('css/jquery.comiseo.daterangepicker.css') }}" rel="stylesheet">
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script src="{{ asset('js/jquery.comiseo.daterangepicker.min.js') }}"></script>
+    <style>
+        #content {margin: 6px 3px 3px 300px;}
+        #left_block {height: 100%;width: 295px;}
+        .comiseo-daterangepicker-triggerbutton {height: 33px;}
+        .ui-button {height:32px}
+    </style>
+ <script>
+ $(document).ready(function(){
+    $('#container').highcharts({
+        {%if temp=='dooropen'%}
+        chart: {
+            type: 'column'
+        },
+        {%endif%}
+        title: {
+            text: '{{name_grafic}}{%if temp=='temperature'%}&#8451;{%endif%}',
+            x: -20 //center
+        },
+        xAxis: {
+            categories: [{% if data.times is defined %}{{data.times|raw}}{% endif %}]
+        },
+        yAxis: {
+            title: {
+                text: '{{name_os}}'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{% if data.values is defined %}{{data.values|raw}}{% endif %}]
+    });
+    $("#daterange").daterangepicker({
+        datepickerOptions : {
+            numberOfMonths : 2
+        },
+        timePicker: true
+    });
+    {% if post.daterange %} 
+    $("#daterange").daterangepicker("setRange", 
+        {
+            start: new Date('{{post.daterange.start}}'),
+            end: new Date('{{post.daterange.end}}')
+        }
+    );
+    {%endif%}
+});
+</script>
+{% endblock %}
+
+{% block form %}
+    <h1>{{'Icebox'|trans}}: {{icebox.title}}</h1>
+    <br>
+    <h2>{{'Filters'|trans}}:</h2><br>
+    <form id="form" action='{{path('get_graphic_'~temp, {'icebox_id': icebox.id})}}' method="post">
+        <input type="hidden" name='id' value='{{icebox.id}}'>
+        <input type="hidden" name='graph' value='{{temp}}'>
+        <input id="page" type="hidden" name='page' value='{{post.page}}'>
+        {%if temp=='dooropen'%}
+            <input type="hidden" name='period' value='day'><br>
+        {% else %}
+            <input type="radio" name='period' value='all' {%if post.period=='all' or post.period==0%}checked{%endif%}><label for='period'>{{'All'|trans}}</label><br>
+            <input type="radio" name='period' value='minute' {%if post.period=='minute'%}checked{%endif%}><label for='period'>{{'Minutes'|trans}}</label><br>
+            <input type="radio" name='period' value='hour' {%if post.period=='hour'%}checked{%endif%}><label for='period'>{{'Hours'|trans}}</label><br>
+            <input type="radio" name='period' value='day' {%if post.period=='day'%}checked{%endif%}><label for='period'>{{'Days'|trans}}</label><br>
+        {% endif %}
+        <input id="daterange" type="text" name="daterange" value=""><br>
+        <button onclick="$('#page').val(1)">{{'View Result'|trans}}</button>
+    </form>
+{% endblock %}
+
+{% block content %}
+    <div id="buttons">
+        <button onclick="location.href='{{path('view_icebox', {'id': icebox.id})}}'">{{'All Data'|trans}}</button>
+        <button onclick="location.href='{{path('get_graphic_'~temp2, {'icebox_id': icebox.id})}}'">{{'Graphic '~temp2|trans}}</button>
+    </div>
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    {% if post.daterange %}
+    <button onclick="$('#page').val({{post.page-1}});$('#form').submit()" {% if post.page <= 1%}disabled{%endif%}>{{'Previos Data'|trans}}</button>
+    <button onclick="$('#page').val({{post.page+1}});$('#form').submit()" {% if post.page*cip >= count_rows %}disabled{%endif%}>{{'Next Data'|trans}}</button>
+    {%endif%}
+    
+{% endblock %}

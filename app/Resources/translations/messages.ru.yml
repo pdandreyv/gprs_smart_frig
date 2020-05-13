@@ -1,0 +1,178 @@
+Logout: Выход
+Login: Вход
+Step: Шаг
+Next: Следующий
+Cancel: Отмена
+login: Вход
+next: Далее
+more: Показать еще записи
+
+Registration: Регистрация
+id: ID
+order: ID
+serial_number: Инвентарный номер
+code_tt: Код ТТ
+model: Модель ХШ
+producer: Производитель
+date_producted: Дата производства
+image: Изображение
+country: Страна
+region: Область
+city: Город
+contragent: Бренд
+status: Статус
+lat: Широта
+lng: Долгота
+p1: Полка 1 (%)
+p2: Полка 2 (%)
+p3: Полка 3 (%)
+p4: Полка 4 (%)
+oos: Количество фактов наступления OOS
+sms: Количество sms информирований
+u_oos: Устранен ли OOS в течение текущей недели
+weight_status: OOS
+Eliminated: Устранен
+Not eliminated: Не устранен
+OOS: OOS
+created_at: Дата создания записи
+updated_at: Дата редактирования записи
+phone: Телефон
+address: Адрес ТТ
+type: Тип ХШ
+description: Описание
+fio: ФИО
+position: Должность
+title: Название ТТ
+brend: Бренд
+t_out: Температура снаружи
+t_inside: Температура внутри
+dooropen: Открытие дверей
+Dooropen: Открытие дверей
+count: Количество
+manager: Ответственный ТП
+power: Подключение
+weight: Вес ХШ (%)
+Weight: Вес
+Weight of the entire refrigerator: Вес всего холодильника
+location: Местонахождение
+not power: Не подключен
+do power: Подключен
+on place: На месте
+full: Заполнен
+outlet: Торговая точка
+trader: Торговый представитель
+user: Пользователь
+tr_fio: Торговый представитель
+tr_phone: Тел. ТП
+tr_email: Email
+monitor: Монитор
+Data: Данные с устройства
+iccid: Id sim
+alarm_power: Смс по отключению
+alarm_weight: Смс по весу
+alarm_location: Смс по локации
+alarm_temperature: Смс по температуре
+Outlets: Торговые точки
+Traders: Ответственные
+Users: Пользователи
+Edit Trader: Редактирование Ответственного
+Edit User: Редактирование Пользователя
+
+Settings: Настройки
+Reports: Отчеты
+Home: Главная
+User: Пользователь
+Save: Сохранить
+Standart: Стандарт
+Alarms: Тревога
+Add new Icebox: Добавить новый холодильник
+Edit Icebox: Редактирование холодильника
+Filters: Фильтры
+Search: Поиск
+Close: Закрыть
+Clear Filter: Очистить фильтр
+View: Показать
+Edit: Правка
+Delete: Удалить
+All: Все
+Map: Карта
+For add coordinates, please, click on map.: Для добавления координат, пожалуйста, кликните на карте
+Edit profile: Редактировать профиль
+Change password: Изменить пароль
+Change: Изменить
+Period send sms in minutes: Период отправки смс в минутах
+Send report if location was changed: Отправлять отчет, если локация была изменена
+Report to phone: Отчет слать на номер телефона
+Coordinates was changed: Перемещен
+Weith is light: Не заполнен
+Not active: Выключен
+Active: Включен
+Temperature is high: Температура выше нормы
+Import data from file *.csv: Импортирование данных из файла *.csv
+Import: Импортировать
+Icebox: Холодильник
+View all data for period: Просмотреть данные по
+Location: Местоположение
+Temperature: Температура
+Interval: За период
+From: От
+To: До
+No data: Нет данных
+Are you sure you want to delete this icebox: Вы уверены, что хотите удалить этот холодильник?
+Generating reports: Формирование отчетов
+Generate a report: Сформировать отчет
+Select the field by which you want to generate a report: Выберите поля по которым нужно сформировать отчет
+Graphically display: Отобразить графически
+You do not have selected any icebox: У Вас не выбрано ни одного холодильника
+Export: Экспорт
+For the current period: За текущий период
+In the last week: За последнюю неделю
+During this period: За указанный период
+New: Новый
+Yes: Да
+No: Нет
+Deactivate: Сделать неактивным
+Add new Outlet: Добавить новую ТТ
+Add new Trader: Добавить нового ответственного
+Add new User: Добавить нового пользователя
+Edit Outlet: Редактирование Торговой точки
+Сalibrate: Калибровать
+Сalibrate threshold: Калибровать порог
+Fool calibrate: Полная калибровка
+Error: Ошибка
+Not correct id of Icebox: Не правильный id холодильника
+Not correct slug: Некорректная ссылка
+Enabled calibration weight: Включен режим калибровки веса холодильника. Для продолжения выключите и включите питание холодильника. После включения нажмите кнопку Далее
+This icebox is impossible to calibrate: Данный холодильник невозможно откалибровать. Обратитесь в техподдержку
+Сancel: Отмена
+Calibration running refrigerator. Please wait: Идет калибровка холодильника. Пожалуйста подождите
+empty_weight_icebox: Связь с холодильником установлена. Извлеките из холодильника весь товар для фиксирования точки отсчета пустого холодильника. После того как холодильник будет пуст, нажмите кнопку Далее
+Minimum weight of the refrigerator is installed: Минимальный вес холодильника установлен. 
+critical_weight_icebox: Заполните холодильник до критической массы (пример 50% или 80%), т.е. до порога при котором должна срабатывать тревога и отправлятся СМС о критическом весе холодильника. После того как заполните до кретической массы холодильник нажмите Далее
+full_weight_icebox: Заполните холодильник до полна, чтоб зафиксировать вес полного холодильника. После заполнения нажмите Далее
+Go check connection with fridge. Wait a few minutes: Идет проверка связи с холодильником. Подождите несколько минут
+Critical mass of the refrigerator is installed: Критическая масса холодильника установлена. 
+Weight full refrigerator saved: Масса полного холодильника сохранена
+Finish: Завершить калибровку
+Repeat: Повторить
+During this calibration fails: Во время данной калибровки произошел сбой, от холодильника не поступали данные. Проверьте подключение холодильника к сети и нажмите кнопку Повторить. В случае повторения данной ошибки - обратитесь в техподдержку.
+Send alarm for power: Посылась сообщения при отключении питания
+Send alarm for weight: Посылать сообщение при критическом весе
+Send alarm for location: Посылать сообщение при смене локации
+Send alarm for temperature: Присылать сообщение при критической температуре
+sms_weight: В ХШ по адресу %address% достигнут критический уровень наличия продукта модели %model%
+sms_location: ХШ по адресу %address% сменил место своей диcлокации
+sms_temperature: В ХШ температура достигла кретического уровня %temp%
+The default value in seconds: Значение по умолчанию в секундах - как часто холодильники должны отправлять данные о своем состоянии на сервер
+Time report: Как часто слать данные на сервер (в секундах)
+Download QR-code: Cкачать QR-код
+Service history: История сервиса
+Remember maximum: Запомнить максимум
+Remember minimum: Запомнить минимум
+Shelf: Полка
+Calibrate weight: Калибровка веса
+Maximum: Максимум
+Minimum: Минимум 
+was saved: был сохранен
+at shelf: у полки №
+in the refrigerator all: у всего холодильника

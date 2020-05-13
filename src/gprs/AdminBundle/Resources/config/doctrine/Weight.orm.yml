@@ -1,0 +1,28 @@
+gprs\AdminBundle\Entity\Weight:
+  type:  entity
+  table: weight
+  #repositoryClass: gprs\AdminBundle\Entity\WeightRepository
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    icebox_id:
+      type: integer
+    weight:
+      type: float
+      nullable: true
+    status:
+      type: integer
+      nullable: true
+    created_at:
+      type: datetime
+  lifecycleCallbacks:
+      prePersist: [ setCreatedAtValue ]
+  manyToOne:
+      icebox:
+        targetEntity: Icebox
+        joinColumn:
+          name: icebox_id
+          referencedColumnName: id
+          onDelete: CASCADE

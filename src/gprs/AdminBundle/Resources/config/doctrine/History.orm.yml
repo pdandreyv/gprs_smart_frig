@@ -1,0 +1,29 @@
+gprs\AdminBundle\Entity\History:
+  type:  entity
+  table: history
+  repositoryClass: gprs\AdminBundle\Entity\HistoryRepository
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    user_id:
+      type: integer
+    icebox_id:
+      type: integer
+      nullable: true
+    event:
+      type: string
+      length: 100
+      nullable: true
+    created_at:
+      type: datetime
+  lifecycleCallbacks:
+      prePersist: [ setCreatedAtValue ]
+  manyToOne:
+      user:
+        targetEntity: User
+        joinColumn:
+          name: user_id
+          referencedColumnName: id
+          onDelete: CASCADE

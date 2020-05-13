@@ -1,0 +1,53 @@
+{% extends "gprsClientBundle::layout.html.twig" %}
+
+{% block head %}
+    {{parent()}}
+
+ <script>
+    
+    function send_post() {
+        $.post( "{{path('get_history')}}", $( "#form" ).serialize(), function(data) {
+            $('#table').html(data);
+        });
+    }
+    function more() {
+        $( "#form" ).append('<input class="more" type="hidden" value="1" name="more" />');
+        $.post( "{{path('get_history')}}", $( "#form" ).serialize(), function(data) {
+            $('#sortTable').append(data);
+        });
+    }
+    $('document').ready(function(){
+        send_post();
+    });
+</script>
+{% endblock %}
+
+{% block form %}
+    
+    <h1>{{'Icebox'|trans}}: {{icebox.title}}</h1>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}<button onclick="location.href='{{path('edit_icebox', {'id': icebox.id})}}'">{{'Edit Icebox'|trans}}</button><br><br>{% endif %}
+    <table>
+    {% for field in fields %}
+        <tr><td>{{field|trans}}:</td><td>{%if(field=='status')%}{{statuses[icebox.status]|trans}}{%else%}{{icebox[field]}}{%endif%}</td></tr>
+    {%endfor%}
+    </table>
+    <input id="outlet_lat" type="hidden" value="{{icebox.lat}}" />
+    <input id="outlet_lng" type="hidden" value="{{icebox.lng}}" />
+    <br>
+    {{'View all data for period'|trans}}:<br>
+    <form id="form" action='{{path('get_history')}}' method="post">
+        <input type="hidden" name='id' value='{{icebox.id}}'>
+        <button onclick="send_post();return false;">{{'View'|trans}}</button>
+    </form>
+        
+{% endblock %}
+
+{% block table %}
+<input type="hidden" value="history" id="form_history">
+    <div id="table">
+        <h4>{{'Service history'|trans}}</h4>
+        <table id="sortTable" class="tablesorter">
+            <tr><th>{{'No data'|trans}}</th></tr
+        </table>
+    </div>
+{% endblock %}

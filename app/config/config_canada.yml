@@ -1,0 +1,25 @@
+imports:
+    - { resource: config_prod.yml }
+
+parameters:
+    database_name: canada
+    locale: en
+
+    # Москва
+    map_center_lat: 55.7528
+    map_center_lng: 37.6243
+    
+    # Харьков
+    #map_center_lat: 50.007
+    #map_center_lng: 36.251
+    
+    # Стандартное количество секунд между сеансами связи с холодильником
+    time_data: 3600
+    
+    site: gprs
+    main_fields: tr_fio,;tr_email,;serial_number,;model,;type,;contragent,;city,;address,;title,;power,single;t_inside,single;t_out,single;dooropen,single;weight,single;location,single;monitor,;sms,period;oos,period;u_oos,period
+    view_icebox_fields: serial_number,iccid,imei,title,type,model,city,address,contragent,status,t_inside,t_out,dooropen
+    data_fields: created_at,p1,p2,p3,p4,p5,p1c,p2c,p3c,p4c,p5c,dooropen,location,t_out,t_inside,weight,weight_status
+    
+    
+    email_from_alarm: gprs@uaic.net

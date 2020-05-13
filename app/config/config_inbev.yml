@@ -1,0 +1,26 @@
+imports:
+    - { resource: config_prod.yml }
+
+parameters:
+    database_name: inbev
+    locale: ru
+
+    # Москва
+    map_center_lat: 55.7528
+    map_center_lng: 37.6243
+    
+    # Харьков
+    #map_center_lat: 50.007
+    #map_center_lng: 36.251
+    
+    # Стандартное количество секунд между сеансами связи с холодильником
+    time_data: 3600
+    
+    site: inbev
+    main_fields: tr_fio,;tr_phone,;serial_number,;model,;type,;contragent,;city,;address,;title,;power,single;t_inside,single;t_out,single;dooropen,single;weight,single;location,single;monitor,;sms,period;oos,period;u_oos,period
+    view_icebox_fields: serial_number,iccid,imei,title,type,model,city,address,contragent,status,t_inside,t_out,dooropen
+    data_fields: created_at,p1,p2,p3,p4,dooropen,location,t_out,t_inside,weight,weight_status
+    
+    calibrate: 55895|739|32768|64587|0|0;54672|25|32968|63494|0|0
+    
+    email_from_alarm: inbev@uaic.net

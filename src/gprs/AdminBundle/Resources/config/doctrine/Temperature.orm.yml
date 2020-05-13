@@ -1,0 +1,28 @@
+gprs\AdminBundle\Entity\Temperature:
+  type:  entity
+  table: temperature
+  #repositoryClass: gprs\AdminBundle\Entity\TemperatureRepository
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    icebox_id:
+      type: integer
+    t_out:
+      type: float
+      nullable: true
+    t_inside:
+      type: float
+      nullable: true
+    created_at:
+      type: datetime
+  lifecycleCallbacks:
+      prePersist: [ setCreatedAtValue ]
+  manyToOne:
+      icebox:
+        targetEntity: Icebox
+        joinColumn:
+          name: icebox_id
+          referencedColumnName: id
+          onDelete: CASCADE

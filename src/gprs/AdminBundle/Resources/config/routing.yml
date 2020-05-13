@@ -1,0 +1,7 @@
+gprs_admin_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: gprsAdminBundle:Default:index }
+
+sonata_admin:
+    pattern:  /
+    defaults: { _controller: SonataAdminBundle:Core:dashboard }

@@ -1,0 +1,91 @@
+{% extends "gprsClientBundle::layout.html.twig" %}
+
+{% block head %}
+    {{parent()}}
+    <script type="text/javascript">
+        var rclick = false;
+        $(document).ready(function(){
+            $('#resizeble').mousedown(function(){
+                rclick = true;
+            });
+            $('#resizeble').mousemove(function(e){
+                if(rclick && e.pageY>75 && e.pageY<$(document).height()-40){
+                    pr = Math.ceil((e.pageY-67)*100/($(document).height()-105));
+                    $(this).css({'top':(pr-2)+'%','bottom':(pr+2)+'%'});
+                    $('#map').css('bottom',(100-pr+2)+'%');
+                    $('#table').css('top',(pr+1)+'%');
+                }
+            });
+            $('#content').mouseup(function(){
+                rclick = false;
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block form %}
+    
+{% if is_granted('ROLE_SUPER_ADMIN') %}
+    <center>
+        <a href="{{path('new_outlet')}}"><button>{{'Add new Outlet'|trans}}</button></a>
+    </center>
+{% endif %}
+    
+    {% if center.lat is not null %}
+    <input id="center_lat" type="hidden" value="{{center.lat}}" />
+    <input id="center_lng" type="hidden" value="{{center.lng}}" />
+    {% endif %}
+    
+{% endblock %}
+
+    
+{% block table %}
+    <div id="resizeble"></div>
+    <div id="table">
+        <script type="text/javascript">
+            $(document).ready(function(){
+                {% for row in data %}
+                    {% if row.lat is not null %}
+                    content = '<div class="map-content"><p>{{row.title}}</p><p>{{row.manager}}</p><p>{{row.phone}}</p></div>';
+                    viewMarker({{row.id}},map,markers,{{row.lat}},{{row.lng}},content);
+                    {%endif%}
+                {% else %}
+                    
+                {% endfor %}
+            });
+        </script>
+
+        <table id="sortTable" class="tablesorter">
+            <tr>
+                {% if data %}
+                    <th class="id {sorter: false}">№</th>
+                    <th colspan="2" class="view_edit notsort">&nbsp;</th>
+                    {% for field in fields %}
+                        <th class="{{field}}">{{field|trans}}</th>
+                    {% endfor %}
+                   
+                {% else %}
+                    <th class="{sorter: false}">{{'No data'|trans}}</th>
+                {% endif %}
+            </tr>
+
+            {% set i = 1 %}
+            {% for row in data %}
+            <tr id="tr{{row.id}}">
+                <td class="check">{{ i }}</td>
+                <td {% if not is_granted('ROLE_SUPER_ADMIN') %} colspan="2" class="view_edit" {%else%} class="view" {%endif%}><a href="{{path('view_outlet', {'id': row.id})}}">{{'View'|trans}}</a></td>
+                {% if is_granted('ROLE_SUPER_ADMIN') %}<td class="edit"><a href="{{path('edit_outlet', {'id': row.id})}}">{{'Edit'|trans}}</a></td>{% endif %}
+                <!--<td><a href="{{path('delete_icebox', {'id': row.id})}}">{{'Delete'|trans}}</a></td>-->
+                {% for field in fields %}
+                    <td class="{{field}}">
+                        {{row[field]}}
+                    </td>
+                {% endfor %}
+            </tr>
+            {% set i = i + 1 %}
+            {% else %}
+            
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% form_theme form 'gprsClientBundle:Form:form_table_layout.html.twig' %}
+
+{% extends "gprsClientBundle::layout.html.twig" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}" />
+    <script type="text/javascript" src="{{ asset('js/google-map.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            initialize(true);
+        });
+    </script>
+{% endblock %}
+  
+{% block table %}{% endblock %}
+
+{% block form %}
+
+    {% if form.vars.value.id is not null %}
+        <h1>{{'Edit Outlet'|trans}}</h1>
+    {% else %}
+        <h1>{{'Add new Outlet'|trans}}</h1>
+    {% endif %}
+        
+    <form name="single" action="{{ form.vars.value.id  ? path('update_outlet', { 'id': form.vars.value.id }) : path('create_outlet') }}" method="post" {{ form_enctype(form) }} >
+        {{ form_widget(form) }}
+            <br>
+        <input type="submit" value="{{'Save'|trans}}" /><br><br>
+    </form>
+    
+  
+    {% if center.lat is not null %}
+    <input id="center_lat" type="hidden" value="{{center.lat}}" />
+    <input id="center_lng" type="hidden" value="{{center.lng}}" />
+    {% endif %}
+    
+{% endblock %}

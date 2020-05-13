@@ -1,0 +1,27 @@
+gprs\AdminBundle\Entity\Tower:
+  type:  entity
+  table: tower
+  repositoryClass: gprs\AdminBundle\Entity\TowerRepository
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    mcc:
+      type: integer
+    mnc:
+      type: integer
+    lac:
+      type: integer
+    cid:
+      type: integer
+    lat:
+      type: float
+      nullable: true
+    lng:
+      type: float
+      nullable: true
+    created_at:
+      type: datetime
+  lifecycleCallbacks:
+      prePersist: [ setCreatedAtValue ]

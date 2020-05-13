@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+</head>
+<body>
+<p>Dear subscriber,</p>
+
+<p>
+	The fridge: IS SmartCool, SD, Carlsberg. Placed: Rheinfelden, Theophil-Roniger-Strasse, Carlsberg Switzerland
+</p>
+
+<p>
+	For 16.00 this day has the following status:
+</p>
+
+<p>
+	Door openings for last 24 hours: {{ dooropen }}
+</p>
+
+<p>Shelves, %:</p>
+{% set thStyle = "border:solid #a8a8a8 1.0pt;background:#4878b3;padding:1.5pt 1.5pt 1.5pt 1.5pt" %}
+{% set thSpanStyle = "font-size:8.5pt;font-family:'Arial','sans-serif';color:white" %}
+{% set tdStyle = "border:solid #a8a8a8 1.0pt;border-top:none;background:#e2e2e2;padding:1.5pt 1.5pt 1.5pt 1.5pt" %}
+{% set tdSpanStyle = "font-size:9.0pt;font-family:'Arial','sans-serif';color:#122388" %}
+<table style="margin-left:48.3pt;border-collapse:collapse" border="0" cellpadding="0" cellspacing="0">
+<tr>
+	<td style="{{ thStyle }}">
+		<p class="MsoNormal" style="text-align:center" align="center">
+			<b><span style="{{ thSpanStyle }}">Created At</span></b>
+		</p>
+	</td>
+{% for i in 1..5 %}
+	<td style="{{ thStyle }}">
+		<p class="MsoNormal" style="text-align:center" align="center">
+			<b><span style="{{ thSpanStyle }}">Shelf {{ i }}</span></b>
+		</p>
+	</td>
+{% endfor %}
+</tr>
+<tr>
+	<td style="{{ tdStyle }}">
+		<p class="MsoNormal" style="text-align:center" align="center">
+			{% set column = 'p'~i %}
+			<span style="{{ tdSpanStyle }}">{{ created_at }}</span>
+		</p>
+	</td>
+{% for i in 1..5 %}
+	<td style="{{ tdStyle }}">
+		<p class="MsoNormal" style="text-align:center" align="center">
+			{% set column = 'p'~i %}
+			<span style="{{ tdSpanStyle }}">{{ shelf[i][column] }}</span>
+		</p>
+	</td>
+{% endfor %}
+</tr>
+</table>
+<p>Shelves, bottles:</p>
+<table style="margin-left:48.3pt;border-collapse:collapse" border="0" cellpadding="0" cellspacing="0">
+<tr>
+	<td style="{{ thStyle }}">
+		<p class="MsoNormal" style="text-align:center" align="center">
+			<b><span style="{{ thSpanStyle }}">Created At</span></b>
+		</p>
+	</td>
+{% for i in 1..5 %}
+	<td style="{{ thStyle }}">
+		<p class="MsoNormal" style="text-align:center" align="center">
+			<b><span style="{{ thSpanStyle }}">Shelf {{ i }}</span></b>
+		</p>
+	</td>
+{% endfor %}
+</tr>
+<tr>
+	<td style="{{ tdStyle }}">
+		<p class="MsoNormal" style="text-align:center" align="center">
+			{% set column = 'p'~i %}
+			<span style="{{ tdSpanStyle }}">{{ created_at }}</span>
+		</p>
+	</td>
+{% for i in 1..5 %}
+	<td style="{{ tdStyle }}">
+		<p class="MsoNormal" style="text-align:center" align="center">
+			{% set column = 'p'~i~'c' %}
+			<span style="{{ tdSpanStyle }}">{{ shelf[i][column] }}</span>
+		</p>
+	</td>
+{% endfor %}
+</tr>
+</table>
+<p>Other data:</p>
+<table style="margin-left:48.3pt;border-collapse:collapse" border="0" cellpadding="0" cellspacing="0">
+<tr>
+	<td style="{{ thStyle }}">
+		<p class="MsoNormal" style="text-align:center" align="center">
+			<b><span style="{{ thSpanStyle }}">Created At</span></b>
+		</p>
+	</td>
+	<td style="{{ thStyle }}">
+		<p class="MsoNormal" style="text-align:center" align="center">
+			<b><span style="{{ thSpanStyle }}">Door openings</span></b>
+		</p>
+	</td>
+	<td style="{{ thStyle }}">
+		<p class="MsoNormal" style="text-align:center" align="center">
+			<b><span style="{{ thSpanStyle }}">Temperature outside</span></b>
+		</p>
+	</td>
+	<td style="{{ thStyle }}">
+		<p class="MsoNormal" style="text-align:center" align="center">
+			<b><span style="{{ thSpanStyle }}">Temperature inside</span></b>
+		</p>
+	</td>
+	<td style="{{ thStyle }}">
+		<p class="MsoNormal" style="text-align:center" align="center">
+			<b><span style="{{ thSpanStyle }}">Weight</span></b>
+		</p>
+	</td>
+	<td style="{{ thStyle }}">
+		<p class="MsoNormal" style="text-align:center" align="center">
+			<b><span style="{{ thSpanStyle }}">OOS</span></b>
+		</p>
+	</td>
+</tr>
+<tr>
+	<td style="{{ tdStyle }}">
+		<p class="MsoNormal" style="text-align:center" align="center">
+			{% set column = 'p'~i %}
+			<span style="{{ tdSpanStyle }}">{{ created_at }}</span>
+		</p>
+	</td>
+	<td style="{{ tdStyle }}">
+		<p class="MsoNormal" style="text-align:center" align="center">
+			{% set column = 'p'~i %}
+			<span style="{{ tdSpanStyle }}">{{ dooropen }}</span>
+		</p>
+	</td>
+	<td style="{{ tdStyle }}">
+		<p class="MsoNormal" style="text-align:center" align="center">
+			{% set column = 'p'~i %}
+			<span style="{{ tdSpanStyle }}">{{ out_temperature }}</span>
+		</p>
+	</td>
+	<td style="{{ tdStyle }}">
+		<p class="MsoNormal" style="text-align:center" align="center">
+			{% set column = 'p'~i %}
+			<span style="{{ tdSpanStyle }}">{{ in_temperature }}</span>
+		</p>
+	</td>
+	<td style="{{ tdStyle }}">
+		<p class="MsoNormal" style="text-align:center" align="center">
+			{% set column = 'p'~i %}
+			<span style="{{ tdSpanStyle }}">{{ weight }}</span>
+		</p>
+	</td>
+	<td style="{{ tdStyle }}">
+		<p class="MsoNormal" style="text-align:center" align="center">
+			{% set column = 'p'~i %}
+			<span style="{{ tdSpanStyle }}">{% if weight_status == 1 %}<span style="color:red">OOS{% endif %}</span></span>
+		</p>
+	</td>
+</tr>
+</table>
+
+<p>
+	You can check the details at 
+	<a href="http://carlsberg.uaic.net/" target="_blank">http://carlsberg.uaic.net/</a>
+</p>
+
+<p>
+	In case of any questions you contact Kateryna Komolova (<a href="mailto:e.komolova@beer-co.com">e.komolova@beer-co.com</a>)
+</p> 
+
+<p>Regards,</p>
+
+<p>Smart Fridge Team</p>
+
+<p>UBC Group</p>
+</body>
+</html>

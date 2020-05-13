@@ -1,0 +1,269 @@
+{% form_theme form 'gprsClientBundle:Form:form_table_layout.html.twig' %}
+
+{% extends "gprsClientBundle::layout.html.twig" %}
+
+{% block head %}
+    {{parent()}}
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="{{ asset('css/style_'~site~'.css') }}" />
+
+    <script type="text/javascript">
+        function clear_filter(){
+            window.document.location.href='{{url('clear_filter', {'alarm': alarm})}}';
+        }
+        var rclick = false;
+        $(document).ready(function(){
+            $('#resizeble').mousedown(function(){
+                rclick = true;
+            });
+            $('#resizeble').mousemove(function(e){
+                if(rclick && e.pageY>75 && e.pageY<$(document).height()-40){
+                    pr = Math.ceil((e.pageY-67)*100/($(document).height()-105));
+                    $(this).css({'top':(pr-2)+'%','bottom':(pr+2)+'%'});
+                    $('#map').css('bottom',(100-pr+2)+'%');
+                    $('#table').css('top',(pr+1)+'%');
+                }
+            });
+            $('#content').mouseup(function(){
+                rclick = false;
+            });
+            if($('#checkper_1').attr('checked')) on_select(0,0);
+            if($('#checkper_2').attr('checked')) on_select(0,1);
+            if($('#checkper_3').attr('checked')) on_select(1,1);
+        });
+        function on_select(r,s) {
+           if(r){
+               $('#from').attr('disabled',false);
+               $('#to').attr('disabled',false);
+           } else {
+               $('#from').attr('disabled','disabled');
+               $('#to').attr('disabled','disabled');
+           }
+           if(s){
+               $('.single').hide();
+               $('.single > :checkbox').attr('checked',false);
+               $('.period').show();
+           } else {
+               $('.single').show();
+               $('.period').hide();
+               $('.period > :checkbox').attr('checked',false);
+           }
+       }
+    </script>
+{% endblock %}
+
+{% block form %}
+    
+    <div class="block">
+        <div class="bl_head">{{'Filters'|trans({},'messages')}}</div>
+        <div class="bl_body">
+            <form action="{{ path('filter_icebox') }}" method="post" >
+                <input type="hidden" name="page" value="{{alarm}}">
+                {{ form_widget(form) }}
+
+                <center>
+                    <input class='button' type="submit" value="{{'Search'|trans}}" />
+                    <button onclick="clear_filter();return false;">{{'Clear Filter'|trans}}</button>
+                </center>
+            </form>
+            
+            <input id="center_lat" type="hidden" value="{{center.lat}}" />
+            <input id="center_lng" type="hidden" value="{{center.lng}}" />
+            {% if not (radius is empty) %}
+                <input id="radius_lat" type="hidden" value="{{radius.lat}}" />
+                <input id="radius_lng" type="hidden" value="{{radius.lng}}" />
+                <input id="radius" type="hidden" value="{{radius.radius}}" />
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block alarms %}
+    {% if not (alarms is empty) %}
+    <h1 class="alarms">{{'Alarms'|trans}}</h1>
+        <ul class="alarms">
+        {% for al in alarms %}
+            <li>
+                <h4>{{'Message'|trans}}: {{al.message|trans}}</h4>
+                {% if al.icebox.image %}<img src="{{asset('upload/'~al.icebox.image)}}" />{% endif %}
+                <p>{{'Serial Number'|trans}}: {{al.icebox.serial_number}}</p>
+                <p>{{'Model'|trans}}:{{al.icebox.model}}</p>
+                <p>{{'Address'|trans}}: {{al.icebox.address}}</p>
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                        content = '<div class="map-content"><h4>{{'Message'|trans}}: {{al.message|trans}}</h4>{% if al.icebox.image %}<img src="{{asset('upload/'~al.icebox.image)}}" />{% endif %}<p>{{al.icebox.serial_number}}</p><p>{{al.icebox.model}}</p></div>';
+                        viewMarker(map,{{al.icebox.lat}},{{al.icebox.lng}},content,'{{asset('img/red2-icon.png')}}');
+                        // for changed coordinates
+                        viewMarker(map,{{al.location.lat}},{{al.location.lng}},content,'{{asset('img/red2-icon.png')}}');
+                        addPolyLine(map,{{al.icebox.lat}}, {{al.icebox.lng}}, {{al.location.lat}}, {{al.location.lng}});
+                    });
+                </script>
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
+    
+
+    
+{% block table %}
+    <div id="resizeble"></div>
+    <div id="table">
+        <script type="text/javascript">
+            
+            function get_data(val,type){
+                $("#icebox_city").html('<option value=""></option>').attr('disabled','disabled');
+                if(val){
+                    //alert('asdf'); 
+                    $.post('/get_'+type+'/'+val,function( data ) {
+                        $("#icebox_"+type).html(data);
+                    });
+                    $("#icebox_"+type).attr('disabled',false);
+                }
+                else {
+                    $("#icebox_"+type).html('<option value=""></option>').attr('disabled','disabled');
+                }
+            }
+            function set_checked(map,markers,lines,id){
+                stat = $('#check_'+id).attr('checked');
+                if(typeof(stat)=='undefined') stat = false;
+                else stat = true;
+                if(id=='all'){
+                    for (marker in markers){
+                        markers[marker].setVisible(stat);
+                        $('#check_'+marker).attr('checked',stat);
+                    }
+                    for (idd in lines){
+                        lines[idd]['marker'].setVisible(stat);
+                        lines[idd]['line'].setVisible(stat);
+                    }
+                    map.setZoom(11);
+                }
+                else {
+                    markers[id].setVisible(stat);
+                    if(typeof(lines[id]) != 'undefined'){
+                        lines[id]['marker'].setVisible(stat);
+                        lines[id]['line'].setVisible(stat);
+                    }
+                    if(!stat) {
+                        $('#check_all').attr('checked',false);
+                    } else {
+                        map.setZoom(14);
+                        map.setCenter(markers[id].getPosition());
+                        if($("input:checked" ).length == {{count}}){
+                            $('#check_all').attr('checked',true);
+                        }
+                    }
+                }
+            }
+            function send_post() {
+                var ids = '';
+                $.each($('[id^="check_"]'),function(i,val){
+                    if($(val).attr('checked') == 'checked'){
+                        id = $(val).attr('id').substr(6);
+                        if(id != 'all') ids += ','+$(val).attr('id').substr(6);
+                    }
+                });
+                if (ids == '') {
+                    alert('{{'You do not have selected any icebox'|trans}}');
+                    return false;
+                }
+                $('#ids').val(ids);
+                
+                $.post( "{{path('get_report')}}", $( "#form" ).serialize(), function(data) {
+                    if(data){
+                        $('#report').show();
+                        $('#treport').html(data).show();
+                    }
+                    else {
+                        $('#report').hide();
+                        $('#treport').html('').hide();
+                    }
+                });
+            }
+            function close_report() {
+                $('#report').hide();
+                $('#treport').html('').hide();
+            }
+            $(document).ready(function(){
+                {% for row in data %}
+                    {% if row.lat is not null %}
+                    content = '<div class="map-content"><p>{{row.title}}</p><p>{{row.model}}</p></div>';
+                    viewMarker({{row.id}},map,markers,{{row.lat}},{{row.lng}},content,'{{asset(icons[row.status])}}');
+                    {%endif%}
+                {% else %}
+                    
+                {% endfor %}
+                    
+                // for changed coordinates
+                {% for al in alarms %}
+                    //content = '<div class="map-content"><h4>{{'Message'|trans}}: {{al.message|trans}}</h4><p>{{al.icebox.serial_number}}</p><p>{{al.icebox.model}}</p></div>';
+                    //viewMarker({{al.icebox.id}},map,markers,{{al.location.lat}},{{al.location.lng}},content,'{{asset('img/red2-icon.png')}}');
+                    //addPolyLine({{al.icebox.id}},map,lines,{{al.icebox.lat}}, {{al.icebox.lng}}, {{al.location.lat}}, {{al.location.lng}},content,'{{asset('img/red2-icon.png')}}');
+                {% endfor %}
+                
+                $("#from").datepicker();
+                $("#to").datepicker();
+                $("#from").datepicker( "option","dateFormat",'yy-mm-dd');
+                $("#to").datepicker( "option","dateFormat",'yy-mm-dd');
+                $("#sortTable").tablesorter(); 
+            });
+        </script>
+
+        <table id="sortTable" class="tablesorter">
+            <thead id='thead'>
+            <tr>
+                {% if data %}
+                    <th width="20" class="check {sorter: false}"><input style="z-index: 1000" id="check_all" onchange="set_checked(map,markers,lines,'all')" type="checkbox" checked> {{'All'|trans}}</th>
+                    <th class="id {sorter: false}">№</th>
+                    <th class="view_edit notsort">&nbsp;</th><!--colspan="2"-->
+                    {% for field in table_fields %}
+                        {% if field[1] != 'period' %}
+                        <th class="{{field[0]}}">{{field[0]|trans}}</th>
+                        {%endif %}
+                    {% endfor %}
+                   
+                {% else %}
+                    <th class="{sorter: false}">{{'No data'|trans}}</th>
+                {% endif %}
+            </tr>
+            </thead>
+
+            <tbody id='tbody'>
+            {% set i = 1 %}
+            {% for row in data %}
+            <tr id="tr{{row.id}}" {% if (i%2==0) %} class="pair" {%endif%}>
+                <td class="check"><input id="check_{{row.id}}" onchange="set_checked(map,markers,lines,{{row.id}})" type="checkbox" checked></td>
+                <td class="check">{{ i }}</td>
+                <td {% if not is_granted('ROLE_SUPER_ADMIN') %} colspan="2" class="view_edit" {%else%} class="view" {%endif%}><a href="{{path('view_icebox', {'id': row.id})}}">{{'View'|trans}}</a></td>
+                {% if is_granted('ROLE_SUPER_ADMIN') %}<!--<td class="edit"><a href="{{path('edit_icebox', {'id': row.id})}}">{{'Edit'|trans}}</a></td>-->{% endif %}
+                <!--<td><a href="{{path('delete_icebox', {'id': row.id})}}">{{'Delete'|trans}}</a></td>-->
+                {% for field in table_fields %}
+                    {% if field[1] != 'period' %}
+                        <td class="{{field[0]}}">
+                            {%if field[0]=='power' %}
+                                {%if row.power==1%}<font color='red'>{{'not power'|trans}}</font>
+                                {%else%}{{'do power'|trans}}{%endif%}
+                            {%elseif field[0]=='weight' %} 
+                                {%if row.weight>=1%}{{row[field[0]]}}%
+                                {%else%}<font color='red'>0%</font>{%endif%}
+                            {%elseif field[0]=='location' %}
+                                {%if row.location==1%}<font color='red'>{{'Coordinates was changed'|trans}}</font>
+                                {%else%}{{'on place'|trans}}{%endif%}
+                            {%elseif field[0]=='monitor' %}
+                                {%if row.monitor%}{{'Yes'|trans}}
+                                {%else%}{{'No'|trans}}{%endif%}
+                            {%else%}{{row[field[0]]}}{%endif%}
+                        </td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            {% set i = i + 1 %}
+            {% else %}
+            
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,64 @@
+gprs\AdminBundle\Entity\Alarm:
+  type:  entity
+  table: alarm
+  #repositoryClass: gprs\AdminBundle\Entity\AlarmRepository
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    icebox_id:
+      type: integer
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+    solved_at:
+      type: datetime
+      nullable: true
+    dooropen:
+      type: integer
+      nullable: true
+    location:
+      type: boolean
+      nullable: true
+    temperatura:
+      type: integer
+      nullable: true
+    weight:
+      type: integer
+      nullable: true
+    power:
+      type: boolean
+      nullable: true
+    p1:
+      type: integer
+      nullable: true
+    p2:
+      type: integer
+      nullable: true
+    p3:
+      type: integer
+      nullable: true
+    p4:
+      type: integer
+      nullable: true
+    p5:
+      type: integer
+      nullable: true
+    p6:
+      type: integer
+      nullable: true
+    status:
+      type: integer
+      nullable: true
+  lifecycleCallbacks:
+      prePersist: [ setCreatedAtValue, setUpdatedAtValue ]
+      preUpdate: [ setUpdatedAtValue ]
+  manyToOne:
+      icebox:
+        targetEntity: Icebox
+        joinColumn:
+          name: icebox_id
+          referencedColumnName: id
+          onDelete: CASCADE

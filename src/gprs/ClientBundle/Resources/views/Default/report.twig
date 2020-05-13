@@ -1,0 +1,51 @@
+{% form_theme form 'gprsClientBundle:Form:form_table_layout.html.twig' %}
+{% extends "gprsClientBundle::layout.html.twig" %}
+
+{% block left_block %}
+    <h1>{{'Report'|trans}}</h1>
+    <br>
+    {% block reports %}
+    <div class="block">
+        <div class="bl_head">{{'Generating reports'|trans}}</div>
+        <div class="bl_body">
+            <form id="form" action='{{path('get_report')}}' method="post">
+                <input id="checkper_1" type="radio" onclick='on_select(0,0)' checked name="now_time" value="now"><label for="now_time">{{'For the current period'|trans}}</label><br>
+                <input id="checkper_2" type="radio" onclick='on_select(0,1)' name="now_time" value="week"><label for="now_time">{{'In the last week'|trans}}</label><br>
+                <input id="checkper_3" type="radio" onclick='on_select(1,1)' name="now_time" value="period"><label for="now_time">{{'During this period'|trans}}</label><br>
+                <label for="from">{{'From'|trans}}: </label>
+                <input type="text" id="from" name="from" disabled><br>
+                <label for="to">{{'To'|trans}}: </label>
+                <input type="text" id="to" name="to" disabled>
+                <input type="hidden" id="ids" name="ids">
+                <p>{{'Select the field by which you want to generate a report'|trans}}:</p>
+                <ul class="report_form">
+                {% set i=0 %}
+                {% for field in table_fields %}
+                    {% if i%2 == 0 %} <tr> {% endif %}
+                        <li class="{{field[1]}}"><input type="checkbox" name="{{field[0]}}"><label for="{{field[0]}}">{{field[0]|trans}}</label></li>
+                    {% if i%2 == 1 %} </tr> {% endif %}
+                    {% set i = i+1 %}
+                {% endfor %}
+                </ul>
+                <center><button onclick="send_post();return false;">{{'Generate a report'|trans}}</button></center>
+            </form>
+        </div>
+    </div>
+    {% endblock %}
+{% endblock %}
+
+{% block content %}
+    <h1>{{'Settings'|trans}}</h1>
+    
+    <form action="{{path('settings_update')}}" method="post" name="sett">
+        {{ form_widget(form) }}
+            <br>
+        <input type="submit" value="{{'Save'|trans}}" />
+    </form><br>
+    
+    <form action="{{path('settings_time')}}" method="post" name="time_rep">
+        {{'The default value in seconds'|trans}}<br>
+        <input type="text" name="time_report" value="{{time_report}}" /> &nbsp; ({{time}})&nbsp; &nbsp;
+        <input type="submit" value="{{'Change'|trans}}" />
+    </form><br>
+{% endblock %}

@@ -1,0 +1,21 @@
+gprs\AdminBundle\Entity\NameOfService:
+  type:  entity
+  table: name_of_service
+  #repositoryClass: gprs\AdminBundle\Entity\NameOfServiceRepository
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    title:
+      type: string
+      length: 100
+      nullable: true
+    description:
+      type: string
+      length: 300
+      nullable: true
+    type:
+      type: string
+      length: 50
+      nullable: true

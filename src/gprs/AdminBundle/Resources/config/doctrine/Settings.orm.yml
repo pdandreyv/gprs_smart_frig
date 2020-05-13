@@ -1,0 +1,55 @@
+gprs\AdminBundle\Entity\Settings:
+  type:  entity
+  table: settings
+  #repositoryClass: gprs\AdminBundle\Entity\SettingsRepository
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    user_id:
+      type: integer
+    period_send_sms:
+      type: integer
+      nullable: true
+    report_change_location:
+      type: boolean
+    report_phone:
+      type: string
+      length: 16
+      nullable: true
+    time_report:
+      type: integer
+      nullable: true
+    # Если false - не проверяет
+    # Если true  - проверяет
+    check_icebox:
+      type: integer
+      nullable: true
+    # Лимит для отдельной полки
+    # минимальный вес полки при
+    # котором еще не нужно отправлять сообщения
+    # значение в процентах
+    shelf_limit:
+      type: integer
+      nullable: true
+    # Лимит для шкафа
+    # минимальный вес шкафа при
+    # котором еще не нужно отправлять сообщения
+    # значение в процентах
+    icebox_limit:
+      type: integer
+      nullable: true
+    # Максимальная внешняя тепрература
+    max_out_temperature:
+      type: integer
+      nullable: true
+    # Максимальная внутреняя тепрература
+    max_in_temperature:
+      type: integer
+      nullable: true    
+    emails:
+      type: string
+      length: 255
+      nullable: true
+

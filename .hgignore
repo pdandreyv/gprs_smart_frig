@@ -1,0 +1,14 @@
+syntax: glob
+*.orig
+*.rej
+*~
+*.o
+tests/*.err
+app/cache/*
+app/logs/*
+vendor/*
+app/config/parameters.yml
+gprs.tar.gz
+
+syntax: regexp
+.*\#.*\#$

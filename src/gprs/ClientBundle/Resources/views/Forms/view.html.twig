@@ -1,0 +1,160 @@
+{% extends "gprsClientBundle::layout.html.twig" %}
+
+{% block head %}
+    {{parent()}}
+ <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+ <script>
+    $(function() {
+        $( "#from" ).datepicker({
+            changeMonth: true,
+            onClose: function( selectedDate ) {
+                $( "#to" ).datepicker( "option", "minDate", selectedDate );
+            }
+        });
+        $( "#to" ).datepicker({
+            changeMonth: true,
+            onClose: function( selectedDate ) {
+                $( "#from" ).datepicker( "option", "maxDate", selectedDate );
+            }
+        });
+        $("#from").datepicker( "option","dateFormat",'yy-mm-dd');
+        $("#to").datepicker( "option","dateFormat",'yy-mm-dd');
+    });
+    function on_select(r) {
+        if(r){
+            $('#from').attr('disabled',false);
+            $('#to').attr('disabled',false);
+        } else {
+            $('#from').attr('disabled','disabled');
+            $('#to').attr('disabled','disabled');
+        }
+        $('.more').remove();
+    }
+    function send_post() {
+        $.post( "{{path('get_table')}}", $( "#form" ).serialize(), function(data) {
+            $('#table').html(data);
+        });
+    }
+    function more() {
+        $( "#form" ).append('<input class="more" type="hidden" value="1" name="more" />');
+        $.post( "{{path('get_table')}}", $( "#form" ).serialize(), function(data) {
+            $('#sortTable').append(data);
+        });
+    }
+    $('document').ready(function(){
+        if($('#form_history').val()!='history'){
+            send_post();
+        }
+    });
+    
+    // AJAX для запоминания максимума и минимума калибровки
+    function maxmin(maxmin) {
+        polka = $('[name=polka]:checked').val();
+        if(polka && $("#bottl"+polka).val()==''){
+            alert('{{'Enter count bottels'|trans}}');
+            return false;
+        }
+        $('#fmaxmin').val(maxmin);
+        $.post('{{path('remember_maxmin')}}', $( "#form_maxmin" ).serialize(),function( data ) {
+            if(data){
+                alert(data);
+            }
+        });
+    }
+    // Работа с вкладками
+    function tabs(obj,name){
+        $('ul.tabs-table li').removeClass('active');
+        $(obj).addClass('active');
+        $('.shelf-pr, .shelf-cn, .other-prm').hide();
+        $('.'+name).show();
+    }
+</script>
+{% endblock %}
+
+{% block form %}
+    
+    <h1>{{'Icebox'|trans}}: {{icebox.title}}</h1>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}<button onclick="location.href='{{path('edit_icebox', {'id': icebox.id})}}'">{{'Edit Icebox'|trans}}</button><br><br>{% endif %}
+    <table>
+    {% for field in fields %}
+        <tr><td>{{field|trans}}:</td><td>{%if(field=='status')%}{{statuses[icebox.status]|trans}}{%else%}{{icebox[field]}}{%endif%}</td></tr>
+    {%endfor%}
+    </table>
+    <input id="outlet_lat" type="hidden" value="{{icebox.lat}}" />
+    <input id="outlet_lng" type="hidden" value="{{icebox.lng}}" />
+    {% if not (radius is empty) %}
+        <input id="radius_lat" type="hidden" value="{{radius.lat}}" />
+        <input id="radius_lng" type="hidden" value="{{radius.lng}}" />
+        <input id="radius" type="hidden" value="{{radius.radius}}" />
+    {% endif %}
+    <br>
+    {{'View all data for period'|trans}}:<br>
+    <form id="form" action='{{path('get_table')}}' method="post">
+        <input type="hidden" name='id' value='{{icebox.id}}'>
+        <input type="hidden" name='table' value='Data'>
+        <!--<input type='radio' name='table' value='Location' checked><lable for='data'>{{'Location'|trans}}</lable><br>
+        <input type='radio' name='table' value='Temperature'><lable for='data'>{{'Temperature'|trans}}</lable><br>
+        <input type='radio' name='table' value='Dooropen'><lable for='data'>{{'dooropen'|trans}}</lable><br>
+        <input type='radio' name='table' value='Weight'><lable for='data'>{{'Weight'|trans}}</lable><br><br>-->
+
+        <input type='radio' onclick='on_select(0)' name='period' value='0' checked><lable for='data'>{{'All'|trans}}</lable><br>
+        <input type='radio' onclick='on_select(1)' name='period' value='1'><lable for='data'>{{'Interval'|trans}}:</lable><br>
+        <label for="from">{{'From'|trans}}: </label>
+        <input type="text" id="from" name="from" disabled><br>
+        <label for="to">{{'To'|trans}}: </label>
+        <input type="text" id="to" name="to" disabled>
+        <button onclick="send_post();return false;">{{'View'|trans}}</button>
+    </form>
+    
+    <button onclick="location.href='{{path('get_qrcode', {'id': icebox.id})}}'">{{'Download QR-code'|trans}}</button>
+    
+    <br>
+    <h3>{{'Calibrate weight'|trans}}</h3>
+    <form id="form_maxmin" name="form_maxmin" method="post">
+        <input type="hidden" id="fmaxmin" name="fmaxmin" value="max" />
+        <input type="hidden" name='id' value='{{icebox.id}}'>
+        <!--<input type="radio" name="polka" value="0" checked />&nbsp; {{'Weight of the entire refrigerator'|trans}}<br>-->
+        <input type="radio" name="polka" value="1" />&nbsp; {{'Shelf'|trans}} 1 | {{'Max count of bottels'|trans}}: <input id="bottl1" type="text" name="count_bottles[1]" /><br>
+        <input type="radio" name="polka" value="2" />&nbsp; {{'Shelf'|trans}} 2 | {{'Max count of bottels'|trans}}: <input id="bottl2" type="text" name="count_bottles[2]" /><br>
+        <input type="radio" name="polka" value="3" />&nbsp; {{'Shelf'|trans}} 3 | {{'Max count of bottels'|trans}}: <input id="bottl3" type="text" name="count_bottles[3]" /><br>
+        <input type="radio" name="polka" value="4" />&nbsp; {{'Shelf'|trans}} 4 | {{'Max count of bottels'|trans}}: <input id="bottl4" type="text" name="count_bottles[4]" /><br>
+        <input type="radio" name="polka" value="5" />&nbsp; {{'Shelf'|trans}} 5 | {{'Max count of bottels'|trans}}: <input id="bottl5" type="text" name="count_bottles[5]" /><br>
+        <!--<input type="radio" name="polka" value="6" />&nbsp; {{'Shelf'|trans}} 6<br>-->
+        <br>
+        <button onclick="maxmin('max'); return false;">{{'Remember full shelf'|trans}}</button>
+        <button onclick="maxmin('min'); return false;">{{'Remember empty shelf'|trans}}</button>
+    </form>
+    <br>
+    
+{% endblock %}
+
+{% block table %}
+    <div id="table">
+        <h4>{{'Location'|trans}}</h4>
+        <table id="sortTable" class="tablesorter">
+            <thead>
+                <tr>
+                    <th>{{'created_at'|trans}}</th>
+                    <th>{{'lat'|trans}}</th>
+                    <th>{{'lng'|trans}}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for row in location %}
+            <tr id="tr{{row.id}}">
+                {% for field in location_fields %}
+                        <td>
+                            {{row[field]}}
+                        </td>
+                {% endfor %}
+            </tr>
+            {% else %}
+                <tr><th>{{'No data'|trans}}</th></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

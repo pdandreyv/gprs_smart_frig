@@ -1,0 +1,125 @@
+gprs\AdminBundle\Entity\Data:
+  type:  entity
+  table: data
+  repositoryClass: gprs\AdminBundle\Entity\DataRepository
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    icebox_id:
+      type: integer
+    net_rssi:
+      type: integer
+      nullable: true
+    net_srv_cid:
+      type: integer
+      nullable: true
+    net_cids:
+      type: string
+      length: 100
+      nullable: true
+    pin1_count:
+      type: integer
+      nullable: true
+    pin1_uptime:
+      type: integer
+      nullable: true
+    adc:
+      type: integer
+      nullable: true
+    temp:
+      type: integer
+      nullable: true
+    bat:
+      type: integer
+      nullable: true
+    par1:
+      type: integer
+      nullable: true
+    par2:
+      type: integer
+      nullable: true
+    dooropen:
+      type: integer
+      nullable: true
+    location:
+      type: boolean
+      nullable: true
+    t_out:
+      type: float
+      nullable: true
+    t_inside:
+      type: float
+      nullable: true
+    weight:
+      type: integer
+      nullable: true
+    weight_status:
+      type: integer
+      nullable: true
+    p1:
+      type: integer
+      nullable: true
+    p2:
+      type: integer
+      nullable: true
+    p3:
+      type: integer
+      nullable: true
+    p4:
+      type: integer
+      nullable: true
+    p5:
+      type: integer
+      nullable: true
+    p6:
+      type: integer
+      nullable: true
+    p1d:
+      type: integer
+      nullable: true
+    p2d:
+      type: integer
+      nullable: true
+    p3d:
+      type: integer
+      nullable: true
+    p4d:
+      type: integer
+      nullable: true
+    p5d:
+      type: integer
+      nullable: true
+    p6d:
+      type: integer
+      nullable: true
+    p1c:
+      type: integer
+      nullable: true
+    p2c:
+      type: integer
+      nullable: true
+    p3c:
+      type: integer
+      nullable: true
+    p4c:
+      type: integer
+      nullable: true
+    p5c:
+      type: integer
+      nullable: true
+    p6c:
+      type: integer
+      nullable: true
+    created_at:
+      type: datetime
+  lifecycleCallbacks:
+      prePersist: [ setCreatedAtValue ]
+  manyToOne:
+      icebox:
+        targetEntity: Icebox
+        joinColumn:
+          name: icebox_id
+          referencedColumnName: id
+          onDelete: CASCADE

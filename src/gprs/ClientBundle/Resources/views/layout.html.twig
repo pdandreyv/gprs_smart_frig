@@ -1,0 +1,82 @@
+{% trans_default_domain 'gprsClientBundle' %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset={{ _charset }}"/>
+        <meta name="robots" content="noindex,nofollow" />
+        <title>{% block title %}Добро пожаловать{% endblock %}</title>
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+        <script type="text/javascript" src="{{ asset('bundles/sonatajquery/jquery-1.8.3.js') }}"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_XuOMTeVl1Xn3ZxUkRTlCGMHQ5tmrdPU&sensor=true&language={{app.request.locale}}"></script>
+
+        {% block head %}
+            <script type="text/javascript" src="{{ asset('js/google-map.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/metadata.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/latest.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/jquery.tablesorter.min.js') }}"></script>
+            <link rel="stylesheet" href="{{ asset('sorttable/sorttable.css') }}" />
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    initialize(false);
+                });
+            </script>
+        {% endblock %}
+    </head>
+    <body>
+        <div id="main">
+            
+            <div id="header">
+                <div class="top_info">
+                    {{'User'|trans({},'messages')}}: {{app.user.username}} | <a href="{{path('fos_user_security_logout')}}">{{'Logout'|trans({},'messages')}}</a>
+                </div>
+                <div class="top_menu">
+                    <a href="{{path('gprs_client_homepage')}}">{{'Home'|trans({},'messages')}}</a> | 
+                    <a href="{{path('list_outlet')}}">{{'Outlets'|trans({},'messages')}}</a> |
+                    <a href="{{path('view_trader')}}">{{'Traders'|trans({},'messages')}}</a> |
+                    <a href="{{path('view_user')}}">{{'Users'|trans({},'messages')}}</a> |
+                    <a href="{{path('settings')}}">{{'Settings'|trans({},'messages')}}</a> 
+                    <!--<a href="#">{{'Reports'|trans({},'messages')}}</a> -->
+                </div>
+            </div>
+                
+            <div id="left_block">
+                {% block left_block %}
+                    {% block form %}
+                        <h1>{{'Filters'|trans({},'messages')}}</h1>
+                    {% endblock %}
+
+                    <!--{% block alarms__ %}{% endblock %}-->
+                    {% block reports %}{% endblock %}
+                {% endblock %}
+            </div>
+            
+            {% if alarm is defined %}
+            <ul class="tabs">
+                <li {%if alarm%}class="notactive"{%endif%}><a href="{{path('gprs_client_homepage')}}">{{'Standart'|trans({},'messages')}} ({{count_standart}})</a></li>
+                <li {%if not alarm%}class="notactive"{%endif%}><a href="{{path('alarms')}}">{{'Alarms'|trans({},'messages')}} ({{count_alarm}})</a></li>
+            </ul>
+            {% endif %}
+            <div id="content" {%if alarm is not defined%}style="top:52px"{%endif%}>
+                
+                {% block content %}
+                    {% block map %}
+                        <div id="map">{{'Map'|trans({},'messages')}}</div>
+                    {% endblock %}
+                        
+                    {% block table %}{% endblock %}
+                {% endblock %}
+                
+            </div>
+            
+            <!--
+            <div id="footer">
+                {% block footer %}Footer{% endblock %}
+            </div>
+            -->
+            <div id="report"></div><div id="treport"></div>
+        </div>
+    </body>
+</html>

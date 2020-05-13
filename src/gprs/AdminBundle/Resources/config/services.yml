@@ -1,0 +1,51 @@
+parameters:
+#    gprs_admin.example.class: gprs\AdminBundle\Example
+
+services:
+#    gprs_admin.example:
+#        class: %gprs_admin.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+  gprs.admin.user:
+    class: gprs\AdminBundle\Admin\UserAdmin
+    tags:
+      - { name: sonata.admin, manager_type: orm, group: "Админка", label: "Пользователи" }
+    arguments:
+      - ~
+      - gprs\AdminBundle\Entity\User
+      - 'SonataAdminBundle:CRUD'
+    calls:
+      - [ setTranslationDomain, [gprsAdminBundle] ]
+      
+  gprs.admin.trader:
+    class: gprs\AdminBundle\Admin\TraderAdmin
+    tags:
+      - { name: sonata.admin, manager_type: orm, group: 'New', label: 'Trader' }
+    arguments:
+      - ~
+      - gprs\AdminBundle\Entity\Trader
+      - 'SonataAdminBundle:CRUD'
+    calls:
+      - [ setTranslationDomain, [gprsAdminBundle]]
+
+  gprs.admin.outlet:
+    class: gprs\AdminBundle\Admin\OutletAdmin
+    tags:
+      - { name: sonata.admin, manager_type: orm, group: 'New', label: 'Outlet' }
+    arguments:
+      - ~
+      - gprs\AdminBundle\Entity\Outlet
+      - 'SonataAdminBundle:CRUD'
+    calls:
+      - [ setTranslationDomain, [gprsAdminBundle]]
+
+  gprs.admin.icebox:
+    class: gprs\AdminBundle\Admin\IceboxAdmin
+    tags:
+      - { name: sonata.admin, manager_type: orm, group: 'New', label: 'Icebox' }
+    arguments:
+      - ~
+      - gprs\AdminBundle\Entity\Icebox
+      - 'SonataAdminBundle:CRUD'
+    calls:
+      - [ setTranslationDomain, [gprsAdminBundle]]

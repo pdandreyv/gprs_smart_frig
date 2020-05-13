@@ -1,0 +1,32 @@
+imports:
+    - { resource: config_prod.yml }
+
+parameters:
+    database_name: molsoncoors
+    locale: en
+
+    # Центр карты по умолчанию
+    map_center_lat: 52.804694
+    map_center_lng: -1.626834
+    
+    # Стандартное количество секунд между сеансами связи с холодильником
+    time_data: 3600
+    
+    site: molsoncoors
+    main_fields: tr_fio,;tr_email,;serial_number,;model,;type,;contragent,;city,;address,;title,;power,single;t_inside,single;t_out,single;weight,single;location,single;monitor,;sms,period;oos,period;u_oos,period
+    view_icebox_fields: serial_number,title,type,model,city,address,contragent,status,t_inside,t_out
+    data_fields: created_at,p1,p2,p3,p4,location,t_out,t_inside,weight
+    
+    #calibrate: 65399|65406|65123|65303|0|0;63644|63259|63795|64438|0|0
+    #calibrate: 65256|64275|32768|62784|0|0;62600|64929|32768|60801|0|0 
+    calibrate: 64766|64891|32768|65285|0|0;62925|61607|32768|61490|0|0
+    # 63287|61530|32768|61418|0|0
+    #первая пустая 64933
+    #65256|65344|32768|61636|0|0 первая полная 2 и 3 пустая
+    #65268|64275|32768|60801|0|0 первая не полная, 2 и 3 полная 4 пустая
+    #62933|462|32768|63022|0|0 четвертая полная
+    # 62600|64929|32768|62784|0|0
+    
+    # 64971|65100|32768|65310|0|0 все пустые
+    
+    email_from_alarm: molsoncoors@uaic.net

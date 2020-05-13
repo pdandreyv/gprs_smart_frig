@@ -1,0 +1,14 @@
+gprs\AdminBundle\Entity\Group:
+  type:  entity
+  table: fos_group
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+      updated_at:
+          type: datetime
+      created_at:
+          type: datetime
+  lifecycleCallbacks:
+      prePersist: [ setCreatedAtValue,setUpdatedAtValue ]
